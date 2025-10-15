@@ -23,6 +23,9 @@ def launch_unpack():
 def pack_main(data):
     packed_data = []
 
+    p = multiprocessing.Process(target=launch_pack)
+    p.start()
+
     with tcs.tcp_server(HOST, PORT) as tcsp:
         # send poly_degree and plain_modulus(bits)
         tcsp.send(8192)
@@ -39,10 +42,15 @@ def pack_main(data):
             _, recv_data = tcsp.recv()
             packed_data.append(int(recv_data))
 
+    p.join()
+
     return packed_data
 
 def unpack_main(packed_data, datalen):
     data = []
+
+    up = multiprocessing.Process(target=launch_unpack)
+    up.start()
 
     with tcs.tcp_server(HOST, PORT) as tcsp:
         # send poly_degree and plain_modulus(bits)
@@ -62,6 +70,8 @@ def unpack_main(packed_data, datalen):
         for i in range(k):
             _, recv_unpacked_data = tcsp.recv()
             data.append(recv_unpacked_data)
+
+    up.join()
     
     return data
 
@@ -70,17 +80,10 @@ if __name__ == "__main__":
     data = [3, 4, 5]
     datalen = 3
 
-    p = multiprocessing.Process(target=launch_pack)
-    p.start()
     pack_data = pack_main(data)
     
-    p.join()
-
-    up = multiprocessing.Process(target=launch_unpack)
-    up.start()
     recv_data = unpack_main(pack_data, datalen)
     
-    up.join()
 
     for i in range(datalen):
         print(f"{recv_data[i]}")
