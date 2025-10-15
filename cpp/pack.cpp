@@ -27,6 +27,7 @@ int main()
     parms.set_coeff_modulus(CoeffModulus::BFVDefault(poly_modulus_degree));
     parms.set_plain_modulus(PlainModulus::Batching(poly_modulus_degree, plain_modulus));
     SEALContext context(parms);
+    tccp.Send<string>(to_string(parms.plain_modulus().value()));
 
     
     BatchEncoder batch_encoder(context);
