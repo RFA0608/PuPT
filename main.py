@@ -9,9 +9,9 @@ def main():
     data = [3, 4, 5, 6, 7, 8]
     datalen = 6
 
-    pack_data = pup.pack_main(data)
+    pack_data = pup.pack(data)
     
-    recv_data = pup.unpack_main(pack_data, datalen)
+    recv_data = pup.unpack(pack_data, datalen)
 
     print(f"{pup.Plain_Modulus_Specify}")
 
