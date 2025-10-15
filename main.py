@@ -4,8 +4,8 @@ import subprocess
 import sys
 sys.path.append(r"py")
 
-pack_prog = './pack'
-unpack_prog = './unpack'
+pack_prog = './cpp/pack'
+unpack_prog = './cpp/unpack'
 
 import tcp_protocol_server as tcs
 
