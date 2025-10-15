@@ -32,7 +32,7 @@ class pupt:
         time.sleep(0.01)
         subprocess.run([unpack_prog])    
 
-    def pack_main(self, data):
+    def pack(self, data):
         packed_data = []
 
         p = multiprocessing.Process(target=self.launch_pack)
@@ -60,7 +60,7 @@ class pupt:
 
         return packed_data
 
-    def unpack_main(self, packed_data, datalen):
+    def unpack(self, packed_data, datalen):
         data = []
 
         up = multiprocessing.Process(target=self.launch_unpack)
