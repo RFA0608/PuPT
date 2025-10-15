@@ -12,6 +12,9 @@ import tcp_protocol_server as tcs
 HOST = 'localhost'
 PORT = 9999
 
+Poly_Degree = 2**13
+Plain_Modulus = 24
+
 def launch_pack():
     time.sleep(0.01)
     subprocess.run([pack_prog])
@@ -28,8 +31,8 @@ def pack_main(data):
 
     with tcs.tcp_server(HOST, PORT) as tcsp:
         # send poly_degree and plain_modulus(bits)
-        tcsp.send(8192)
-        tcsp.send(24)
+        tcsp.send(Poly_Degree)
+        tcsp.send(Plain_Modulus)
 
         # send the number of data
         tcsp.send(len(data))
@@ -54,8 +57,8 @@ def unpack_main(packed_data, datalen):
 
     with tcs.tcp_server(HOST, PORT) as tcsp:
         # send poly_degree and plain_modulus(bits)
-        tcsp.send(8192)
-        tcsp.send(24)
+        tcsp.send(Poly_Degree)
+        tcsp.send(Plain_Modulus)
 
         # send the number of data
         k = datalen
